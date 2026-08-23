@@ -16,7 +16,7 @@ async function latest(filter) {
     if (!timestamp) throw new Error(`No timestamp for filter ${filter}`);
     const data = await getJson(`${BASE}/${filter}/${REGION}/${filter}_${REGION}_${RESOLUTION}_${timestamp}.json`);
     const now = Date.now() + 5 * 60 * 1000;
-    const point = data.series.slice().reverse().find(item => Array.isArray(item) && item[0] <= now && Number.isFinite(Number(item[1])));
+    const point = data.series.slice().reverse().find(item => Array.isArray(item) && item[0] <= now && item[1] !== null && Number.isFinite(Number(item[1])));
     if (!point) throw new Error(`No usable series value for filter ${filter}`);
     return { timestamp: Number(point[0]), mwh: Number(point[1]) };
 }

@@ -57,7 +57,7 @@
 
         for (let index = series.length - 1; index >= 0; index -= 1) {
             const point = series[index];
-            if (Array.isArray(point) && point[0] <= now && Number.isFinite(Number(point[1]))) {
+            if (Array.isArray(point) && point[0] <= now && point[1] !== null && Number.isFinite(Number(point[1]))) {
                 return { timestamp: Number(point[0]), mwh: Number(point[1]) };
             }
         }
