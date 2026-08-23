@@ -635,3 +635,70 @@ footer {
 
     color: #64748b;
 }
+
+/* ============================================================
+   LIVE SMARD DATA
+   ============================================================ */
+
+.section-help {
+    margin: 7px 0 0;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.live-data-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.live-badge {
+    border-radius: 999px;
+    padding: 8px 13px;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.live-badge.live { background: #dcfce7; color: #166534; }
+.live-badge.loading { background: #e0f2fe; color: #0369a1; }
+.live-badge.fallback { background: #fef3c7; color: #92400e; }
+.live-badge.error { background: #fee2e2; color: #991b1b; }
+
+.metric-time {
+    font-size: 17px !important;
+    line-height: 1.3;
+}
+
+.live-data-footer {
+    margin-top: 18px;
+    padding: 16px;
+    border-radius: 12px;
+    background: #f8fafc;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+.live-data-footer span {
+    display: block;
+    margin-top: 5px;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.data-attribution {
+    margin: 14px 0 0;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+@media (max-width: 900px) {
+    .live-data-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 560px) {
+    .live-data-grid { grid-template-columns: 1fr; }
+    .live-data-footer { align-items: stretch; flex-direction: column; }
+}

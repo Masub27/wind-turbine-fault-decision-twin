@@ -226,6 +226,55 @@
     </section>
 
 
+    <!-- LIVE GRID DATA -->
+
+    <section class="card live-data-card">
+        <div class="section-header">
+            <div>
+                <span class="section-label">02A</span>
+                <h2>Live Magdeburg Energy Context</h2>
+                <p class="section-help">50Hertz control-area data used as the regional proxy for Magdeburg.</p>
+            </div>
+            <div id="liveDataBadge" class="live-badge loading">CONNECTING</div>
+        </div>
+
+        <div class="live-data-grid">
+            <div class="metric">
+                <span>Onshore Wind</span>
+                <strong id="liveWindPower">—</strong>
+                <small>MW average power</small>
+            </div>
+            <div class="metric">
+                <span>Grid Load</span>
+                <strong id="liveGridLoad">—</strong>
+                <small>MW average power</small>
+            </div>
+            <div class="metric">
+                <span>Regional Wind Proxy</span>
+                <strong id="liveWindProxy">—</strong>
+                <small>m/s for this twin</small>
+            </div>
+            <div class="metric">
+                <span>Measurement Time</span>
+                <strong id="liveMeasurementTime" class="metric-time">—</strong>
+                <small>Europe/Berlin</small>
+            </div>
+        </div>
+
+        <div class="live-data-footer">
+            <div>
+                <strong id="liveDataMessage">Connecting to SMARD…</strong>
+                <span id="liveRefreshInfo">Automatic refresh every 15 minutes.</span>
+            </div>
+            <button id="refreshLiveDataButton" class="secondary" type="button">Refresh now</button>
+        </div>
+
+        <p class="data-attribution">
+            Source: Bundesnetzagentur | SMARD.de (CC BY 4.0). Values published as quarter-hour MWh are converted to average MW using MW = MWh × 4. SMARD data describe the 50Hertz grid region, not one physical turbine.
+        </p>
+    </section>
+
+
     <!-- FAULT -->
 
     <section class="card fault-card">
@@ -509,6 +558,7 @@
 <script src="js/agents.js"></script>
 <script src="js/decision-engine.js"></script>
 <script src="js/app.js"></script>
+<script src="js/live-data.js"></script>
 
 </body>
 </html>
