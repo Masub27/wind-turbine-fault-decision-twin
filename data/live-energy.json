@@ -1,11 +1,11 @@
 {
-  "status": "waiting-for-first-github-update",
+  "status": "live",
   "source": "Bundesnetzagentur | SMARD.de",
   "region": "50Hertz",
   "resolution": "quarterhour",
-  "generatedAt": null,
-  "windTimestamp": null,
-  "windMWh": null,
-  "gridLoadTimestamp": null,
-  "gridLoadMWh": null
+  "generatedAt": "2026-08-23T11:22:31.965Z",
+  "windTimestamp": 1787483700000,
+  "windMWh": 0,
+  "gridLoadTimestamp": 1787483700000,
+  "gridLoadMWh": 0
 }
