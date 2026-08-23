@@ -3,9 +3,9 @@
   "source": "Bundesnetzagentur | SMARD.de",
   "region": "50Hertz",
   "resolution": "quarterhour",
-  "generatedAt": "2026-08-23T15:55:12.054Z",
-  "windTimestamp": 1787498100000,
-  "windMWh": 1459.18,
-  "gridLoadTimestamp": 1787498100000,
-  "gridLoadMWh": 2259.59
+  "generatedAt": "2026-08-23T16:09:36.226Z",
+  "windTimestamp": 1787499000000,
+  "windMWh": 1540.03,
+  "gridLoadTimestamp": 1787499000000,
+  "gridLoadMWh": 2238.58
 }
