@@ -4,31 +4,22 @@
 
 const agents = {
 
+    responses: {},
+    consulted: new Set(),
+    currentFault: "none",
+
     analyse() {
 
         const fault = turbine.fault;
 
         if (!fault || fault === "none") {
 
-            this.show(
-                "maintenance",
-                "No active fault. Continue normal mechanical monitoring."
-            );
-
-            this.show(
-                "energy",
-                "Energy production is operating under normal conditions."
-            );
-
-            this.show(
-                "safety",
-                "No immediate abnormal safety condition detected."
-            );
-
-            const solution = document.getElementById("agent-solution");
-            if (solution) {
-                solution.innerHTML = "<strong>Normal operation:</strong><br>MONITOR → RECORD TELEMETRY → CONTINUE SAFE OPERATION";
-            }
+            this.responses = {
+                maintenance: "No active fault. Continue normal mechanical monitoring.",
+                energy: "Energy production is operating under normal conditions.",
+                safety: "No immediate abnormal safety condition detected."
+            };
+            this.prepareConsultation("none");
 
             return;
         }
@@ -285,31 +276,87 @@ const agents = {
 
 
         // ----------------------------------------------------
-        // DISPLAY
+        // STORE RESPONSES — EACH ONE IS REVEALED ONLY WHEN
+        // THE LEARNER CONSULTS THAT WORKPLACE AGENT.
         // ----------------------------------------------------
 
-        this.show(
-            "maintenance",
-            maintenance
-        );
+        this.responses = { maintenance, energy, safety };
+        this.prepareConsultation(fault);
 
-        this.show(
-            "energy",
-            energy
-        );
-
-        this.show(
-            "safety",
-            safety
-        );
+    },
 
 
-        // ----------------------------------------------------
-        // COORDINATED DECISION
-        // ----------------------------------------------------
+    // ========================================================
+    // RESET THE THREE CONSULTATIONS FOR A NEW FAULT
+    // ========================================================
 
-        this.showSolution(fault);
+    prepareConsultation(fault) {
+        this.currentFault = fault;
+        this.consulted = new Set();
 
+        ["maintenance", "energy", "safety"].forEach(agentName => {
+            this.show(agentName, "Ready to analyse. Select the button to consult this agent.");
+
+            const button = document.getElementById("consult-" + agentName);
+            if (button) {
+                button.disabled = false;
+                button.textContent = `Consult ${agentName.charAt(0).toUpperCase() + agentName.slice(1)} Agent`;
+            }
+
+            const card = document.getElementById("agent-" + agentName)?.closest(".agent");
+            if (card) card.classList.remove("consulted");
+        });
+
+        const solution = document.getElementById("agent-solution");
+        if (solution) {
+            solution.classList.add("locked");
+            solution.innerHTML = "🔒 Consult all three agents to unlock the coordinated solution. (0 of 3 completed)";
+        }
+
+        const decisionButton = document.getElementById("submitDecisionButton");
+        if (decisionButton) {
+            decisionButton.disabled = true;
+            decisionButton.title = "Consult all three workplace agents first.";
+        }
+    },
+
+
+    // ========================================================
+    // CONSULT ONE AGENT
+    // ========================================================
+
+    consult(agentName) {
+        if (!this.responses[agentName]) this.analyse();
+
+        this.show(agentName, this.responses[agentName] || "No analysis is available.");
+        this.consulted.add(agentName);
+
+        const button = document.getElementById("consult-" + agentName);
+        if (button) {
+            button.disabled = true;
+            button.textContent = "✓ Consultation completed";
+        }
+
+        const card = document.getElementById("agent-" + agentName)?.closest(".agent");
+        if (card) card.classList.add("consulted");
+
+        const solution = document.getElementById("agent-solution");
+        if (this.consulted.size === 3) {
+            if (solution) solution.classList.remove("locked");
+            this.showSolution(this.currentFault);
+
+            const decisionButton = document.getElementById("submitDecisionButton");
+            if (decisionButton && this.currentFault !== "none") {
+                decisionButton.disabled = false;
+                decisionButton.title = "";
+            }
+        } else if (solution) {
+            solution.innerHTML = `🔒 Continue the investigation: ${this.consulted.size} of 3 agents consulted.`;
+        }
+
+        if (typeof addEvent === "function") {
+            addEvent(`${agentName.charAt(0).toUpperCase() + agentName.slice(1)} Agent consulted by learner.`);
+        }
     },
 
 
@@ -358,6 +405,13 @@ const agents = {
 
 
         switch (fault) {
+
+            case "none":
+
+                solution =
+                    "MONITOR → RECORD TELEMETRY → CONTINUE SAFE OPERATION";
+
+                break;
 
             case "blade-imbalance":
 
@@ -442,3 +496,9 @@ const agents = {
 // ============================================================
 
 window.agents = agents;
+
+document.getElementById("consult-maintenance")?.addEventListener("click", () => agents.consult("maintenance"));
+document.getElementById("consult-energy")?.addEventListener("click", () => agents.consult("energy"));
+document.getElementById("consult-safety")?.addEventListener("click", () => agents.consult("safety"));
+
+setTimeout(() => agents.analyse(), 0);

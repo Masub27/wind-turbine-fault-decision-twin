@@ -391,7 +391,44 @@ button.danger {
 .agent p {
     color: var(--muted);
     line-height: 1.6;
-    margin-bottom: 0;
+    margin-bottom: 18px;
+    min-height: 76px;
+}
+
+.agent.consulted {
+    border-color: #22c55e;
+    background: #f0fdf4;
+}
+
+.consult-agent-button {
+    width: 100%;
+    border: 0;
+    border-radius: 10px;
+    padding: 11px 12px;
+    background: var(--primary);
+    color: white;
+    font-weight: 750;
+    cursor: pointer;
+}
+
+.consult-agent-button:hover {
+    background: var(--primary-dark);
+}
+
+.consult-agent-button:disabled {
+    background: #16a34a;
+    cursor: default;
+}
+
+#submitDecisionButton:disabled {
+    opacity: .55;
+    cursor: not-allowed;
+}
+
+.solution-box.locked {
+    background: #f8fafc;
+    color: var(--muted);
+    border: 1px dashed #94a3b8;
 }
 
 .decision-grid {
